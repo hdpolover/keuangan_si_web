@@ -36,3 +36,18 @@
     opacity: 0.9;
     cursor: pointer !important;
 }
+
+.form-group label {
+    z-index: unset !important;
+    top: unset !important;
+    transform: none !important;
+    position: relative !important;
+    margin-left: 0px !important;
+    transform-origin: unset !important;
+    transition: unset !important;
+}
+
+input:not([type]), input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url] {
+    height: 45px !important;
+    padding: 10px 6px !important;
+}

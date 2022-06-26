@@ -66,4 +66,11 @@ class M_auth extends CI_Model
         $this->db->update('tb_auth', $data_user);
         return $this->db->affected_rows() == true;
     }
+
+    public function update_logTime()
+    {
+        $this->db->where('user_id', $this->session->userdata('user_id'));
+        $this->db->update('tb_auth', ['log_time' => time()]);
+        return $this->db->affected_rows() == true;
+    }
 }

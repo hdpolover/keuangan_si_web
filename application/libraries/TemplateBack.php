@@ -15,12 +15,20 @@ class TemplateBack
         return $query->row()->value;
     }
 
+    public function getPengingat()
+    {
+        $query = $this->_ci->db->get_where('tb_pengingat', ['user_id' => $this->_ci->session->userdata('user_id'), 'status' => 0]);
+        return $query->result();
+    }
+
     public function view($content, $data = null)
     {
         $data['web_title'] = $this->getSettingsValue('web_title');
         $data['web_desc'] = $this->getSettingsValue('web_desc');
         $data['web_icon'] = $this->getSettingsValue('web_icon');
         $data['web_logo'] = $this->getSettingsValue('web_logo');
+
+        $data['pengingat_notif'] = $this->getPengingat();
 
         $this->_ci->load->view('template/backend/header', $data);
         $this->_ci->load->view('template/alert', $data);

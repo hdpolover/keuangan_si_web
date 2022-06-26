@@ -78,6 +78,8 @@ class Authentication extends CI_Controller
 
                 $this->session->set_userdata($session_data);
 
+                $this->M_auth->update_logTime();
+
                 if ($this->session->userdata('redirect')) {
                     $this->session->set_flashdata('notif_success', 'Anda telah masuk. Silahkan melanjutkan aktivitas anda!');
                     redirect($this->session->userdata('redirect'));

@@ -30,6 +30,9 @@
 	<!-- Theme Styles -->
 	<link href="<?= base_url();?>assets/css/alpha.min.css" rel="stylesheet">
 
+    <!-- datatables -->
+    <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
     <!-- stylesheet -->
     <link href="<?= base_url();?>assets/css/custom.css" rel="stylesheet">
 
@@ -42,6 +45,7 @@
     <!-- data tables -->
 	<script type="text/javascript" src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="//cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/waves/waves.min.js"></script>
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/d3/d3.min.js"></script>
@@ -53,8 +57,6 @@
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/flot/jquery.flot.symbol.min.js"></script>
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/flot/jquery.flot.resize.min.js"></script>
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/flot/jquery.flot.tooltip.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/js/alpha.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/js/pages/dashboard.js"></script>
 </head>
 <body>
 	<div class="loader">
