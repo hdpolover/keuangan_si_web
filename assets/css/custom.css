@@ -1,0 +1,38 @@
+/* Your custom CSS code */
+
+/* SCROLL BAR */
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    cursor: pointer;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #674aee;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: #674aee;
+    opacity: 0.9;
+    cursor: pointer !important;
+}

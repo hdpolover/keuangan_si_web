@@ -24,7 +24,6 @@ class TemplateFront
 
         $this->_ci->load->view('template/frontend/header', $data);
         $this->_ci->load->view('template/alert', $data);
-        $this->_ci->load->view('template/frontend/navbar', $data);
         $this->_ci->load->view($content, $data);
         $this->_ci->load->view('template/frontend/footer', $data);
     }

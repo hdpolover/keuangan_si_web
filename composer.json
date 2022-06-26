@@ -4,7 +4,6 @@
 	"type": "project",
 	"require": {
 		"phpoffice/phpspreadsheet": "dev-master",
-		"phpmailer/phpmailer": "dev-master",
 		"tecnickcom/tcpdf": "dev-main"
 	},
 	"license": "AFL-1.1",

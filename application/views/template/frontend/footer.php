@@ -1,30 +1,17 @@
   <!-- JS Plugins Init. -->
-  <script>
-  	function tour() {
-  		introJs().setOptions({
-  			disableInteraction: true,
-  			steps: [{
-  				intro: "Welcome, we will briefly explain our feature`s"
-  			}]
-  		}).start();
-  	}
-
-  	$(document).ready(function () {
-  		$('table.table').each(function () {
-  			$($(this).attr('id')).DataTable({
-  				responsive: true
-  			});
-  		});
-
-  		//  ckeditor
-  		$('textarea.editor').each(function () {
-  			CKEDITOR.replace($(this).attr('id'));
-  		});
-  	})
-
-  </script>
 
   </body>
+
+		<script>
+      $('form').submit(function(event) {
+        $('#send-button').prop("disabled", true);
+        // add spinner to button
+        $('#send-button').html(
+        `<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Loading...`
+        );
+        return;
+      });
+		</script>
 
   </html>
 
