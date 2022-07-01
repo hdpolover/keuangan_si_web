@@ -3949,7 +3949,6 @@ input[type=datetime],
 input[type=email],
 input[type=number],
 input[type=password],
-input[type=search],
 input[type=tel],
 input[type=text],
 input[type=time],
@@ -5567,7 +5566,7 @@ li.plupload_delete a:hover::before {
 
 .table-container {
     border-radius: 4px;
-    border: 1px solid #E0E0E0;
+    /* border: 1px solid #E0E0E0; */
 }
 
 .table {
@@ -5575,22 +5574,22 @@ li.plupload_delete a:hover::before {
     margin-bottom: 0;
 }
 
-.table th {
+/* .table th {
     height: 56px;
     padding: 16px;
-}
+} */
 
-.table td,
+/* .table td,
 .table tbody th {
     height: 52px;
     padding: 16px;
-}
+} */
 
-.table th,
+/* .table th,
 .table td {
     border-bottom: none!important;
     border-top: none!important;
-}
+} */
 
 .table tr {
     border-bottom: 1px solid #E0E0E0;

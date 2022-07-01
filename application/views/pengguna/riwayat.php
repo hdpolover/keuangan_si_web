@@ -8,7 +8,7 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="table-container">
-					<table class="table table-bordered table-hover w-100" id="dataTable">
+					<table class="table table-bordered table-hover w-100" id="myTable">
 						<thead>
 							<tr>
 								<th width="5%">No.</th>

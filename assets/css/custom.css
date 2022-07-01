@@ -47,7 +47,7 @@
     transition: unset !important;
 }
 
-input:not([type]), input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url] {
+input:not([type]), input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], input[type=time], input[type=url] {
     height: 45px !important;
     padding: 10px 6px !important;
 }

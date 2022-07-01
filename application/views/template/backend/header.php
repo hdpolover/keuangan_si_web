@@ -28,10 +28,10 @@
 	<link href="<?= base_url();?>assets/plugins/nvd3/nv.d3.min.css" rel="stylesheet">
 	
 	<!-- Theme Styles -->
-	<link href="<?= base_url();?>assets/css/alpha.min.css" rel="stylesheet">
+	<link href="<?= base_url();?>assets/css/alpha.css" rel="stylesheet">
 
     <!-- datatables -->
-    <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <!-- stylesheet -->
     <link href="<?= base_url();?>assets/css/custom.css" rel="stylesheet">
@@ -43,8 +43,7 @@
 	<!-- sweetalert2 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- data tables -->
-	<script type="text/javascript" src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="//cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+	<script type="text/javascript" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/waves/waves.min.js"></script>
 	<script type="text/javascript" src="<?= base_url();?>assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>

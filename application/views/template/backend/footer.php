@@ -15,6 +15,10 @@
         );
         return;
     });
+
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
     
     </script>
 

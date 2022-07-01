@@ -8,7 +8,7 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="table-container">
-					<table class="table table-bordered table-hover w-100" id="dataTable">
+					<table class="table table-bordered table-hover w-100" id="myTable">
 						<thead>
 							<tr>
 								<th width="5%">No.</th>
@@ -26,7 +26,7 @@
 								<td><?= $val->nama;?></td>
 								<td><?= $val->email;?></td>
 								<td><?= date("d F Y - H:i", $val->log_time);?></td>
-								<td>Rp. <?= number_format($val->keuangan);?></td>
+								<td>Rp. <?= number_format($this->M_admin->get_nominal($val->user_id));?></td>
 							</tr>
 							<?php endforeach;?>
 							<?php endif;?>
