@@ -7,7 +7,7 @@
         					<span class="material-design-hamburger__layer"></span>
         				</a>
         			</section>
-        			<a class="navbar-brand" href="#">Keuanganku</a>
+        			<a class="navbar-brand" href="#">CatatanUangku</a>
         			<button class="navbar-toggler" type="button" data-toggle="collapse"
         				data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         				aria-expanded="false" aria-label="Toggle navigation">

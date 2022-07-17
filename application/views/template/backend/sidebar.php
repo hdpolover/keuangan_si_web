@@ -66,7 +66,7 @@
             			</div>
             		</div>
             		<div class="sidebar-footer">
-            			<p class="copyright">Keuanganku ©2022</p>
+            			<p class="copyright">CatatanUangku ©2022</p>
             		</div>
             	</div>
             </div><!-- Left Sidebar -->
