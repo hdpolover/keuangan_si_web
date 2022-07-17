@@ -40,8 +40,8 @@ class M_admin extends CI_Model
         return $this->db->get_where('tb_pengingat', ['bulanan' => 1])->result();
     }
 
-    function update_reminder($id){
+    function update_reminder($id, $new_date){
         $this->db->where('id', $id);
-        $this->db->update('tb_pengingat', ['status' => 0]);
+        $this->db->update('tb_pengingat', ['status' => 0, 'tanggal' => $new_date]);
     }
 }
