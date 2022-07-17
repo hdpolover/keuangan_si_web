@@ -72,6 +72,7 @@ CREATE TABLE `tb_pengingat` (
   `tanggal` int(11) NOT NULL DEFAULT 0,
   `tagihan` int(11) NOT NULL DEFAULT 0,
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: Belum Dibayar; 1: Sudah Dibayar',
+  `bulanan` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` int(11) NOT NULL DEFAULT 0,
   `created_by` int(11) NOT NULL DEFAULT 0,
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
@@ -83,9 +84,9 @@ CREATE TABLE `tb_pengingat` (
 
 /*Data for the table `tb_pengingat` */
 
-insert  into `tb_pengingat`(`id`,`user_id`,`nama`,`tanggal`,`tagihan`,`status`,`created_at`,`created_by`,`is_deleted`) values 
-(1,3,'Tagihan listrik bulanan',1656176400,250000,1,0,0,0),
-(2,3,'Tagihan air',1656349200,54000,0,0,0,0);
+insert  into `tb_pengingat`(`id`,`user_id`,`nama`,`tanggal`,`tagihan`,`status`, 'bulanan',`created_at`,`created_by`,`is_deleted`) values 
+(1,3,'Tagihan listrik bulanan',1656176400,250000,1,0,0,0,0),
+(2,3,'Tagihan air',1656349200,54000,0,1,0,0,0);
 
 /*Table structure for table `tb_settings` */
 
