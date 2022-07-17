@@ -19,7 +19,7 @@ class Cronjob extends CI_Controller
             foreach($reminder as $key => $val):
                 $deadline = strtotime("-7 day", time());
                 if($deadline > $val->tanggal && $val->status == 1){
-                    $new_date = strtotime("+1 month", time());
+                    $new_date = strtotime("+1 month", $val->tanggal);
                     $this->M_admin->update_reminder($val->id, $new_date);
                     $no++;
                 }
