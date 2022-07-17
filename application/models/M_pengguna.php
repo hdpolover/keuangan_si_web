@@ -133,4 +133,20 @@ class M_pengguna extends CI_Model
         $this->db->update('tb_pengingat', ['status' => 1]);
         return $this->db->affected_rows() == true;
     }
+
+    function pengingat_bulanan(){
+        $id = $this->input->post('id');
+
+        $this->db->where('id', $id);
+        $this->db->update('tb_pengingat', ['bulanan' => 1]);
+        return $this->db->affected_rows() == true;
+    }
+
+    function pengingat_bulanan_mati(){
+        $id = $this->input->post('id');
+
+        $this->db->where('id', $id);
+        $this->db->update('tb_pengingat', ['bulanan' => 0]);
+        return $this->db->affected_rows() == true;
+    }
 }

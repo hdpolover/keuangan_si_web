@@ -35,4 +35,13 @@ class M_admin extends CI_Model
         $this->db->where(['user_id' => $id, 'is_deleted' => 0]);
         return $this->db->get()->row()->total;
     }
+
+    function get_allreminder(){
+        return $this->db->get_where('tb_pengingat', ['bulanan' => 1])->result();
+    }
+
+    function update_reminder($id){
+        $this->db->where('id', $id);
+        $this->db->update('tb_pengingat', ['status' => 0]);
+    }
 }

@@ -117,6 +117,26 @@ class Pengguna extends CI_Controller
         }
     }
 
+    function pengingat_bulanan(){
+        if($this->M_pengguna->pengingat_bulanan() == true){
+            $this->session->set_flashdata('notif_success', "Berhasil mengaktifkan pengingat bulanan!");
+            redirect(site_url('pengguna/pengingat'));
+        }else{
+            $this->session->set_flashdata('notif_warning', "Terjadi kesalahaan saat mengaktifkan pengingat bulanan, coba lagi nanti!");
+			redirect($this->agent->referrer());
+        }
+    }
+
+    function pengingat_bulanan_mati(){
+        if($this->M_pengguna->pengingat_bulanan_mati() == true){
+            $this->session->set_flashdata('notif_success', "Berhasil menonaktifkan pengingat bulanan!");
+            redirect(site_url('pengguna/pengingat'));
+        }else{
+            $this->session->set_flashdata('notif_warning', "Terjadi kesalahaan saat menonaktifkan pengingat bulanan, coba lagi nanti!");
+			redirect($this->agent->referrer());
+        }
+    }
+
     public function riwayat()
     {
         $data['keuangan'] = $this->M_pengguna->get_keuanganRiwayat();
