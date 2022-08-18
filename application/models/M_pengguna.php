@@ -41,6 +41,24 @@ class M_pengguna extends CI_Model
             'lama' => $lama
         ];
     }
+    
+    function getChartPemasukan()
+    {
+        $this->db->select("FROM_UNIXTIME(created_at, '%Y-%m-%d') AS created_at, SUM(nominal) AS nominal");
+        $this->db->from('tb_keuangan');
+        $this->db->where(['user_id' => $this->session->userdata('user_id'), 'kategori' => 2]);
+        $this->db->group_by("FROM_UNIXTIME(created_at, '%Y-%m-%d')");
+        return $this->db->get()->result();
+    }
+    
+    function getChartPengeluaran()
+    {
+        $this->db->select("FROM_UNIXTIME(created_at, '%Y-%m-%d') AS created_at, SUM(nominal) AS nominal");
+        $this->db->from('tb_keuangan');
+        $this->db->where(['user_id' => $this->session->userdata('user_id'), 'kategori' => 1]);
+        $this->db->group_by("FROM_UNIXTIME(created_at, '%Y-%m-%d')");
+        return $this->db->get()->result();
+    }
 
     // keuangan
     function get_keuangan($kategori){

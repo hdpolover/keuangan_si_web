@@ -30,6 +30,25 @@ class Admin extends CI_Controller
     public function index()
     {
         $data['statistik'] = $this->M_admin->get_statistik();
+        
+        // daily  account chart
+        $getChartPemasukan = $this->M_admin->getChartPemasukan();
+        foreach ($getChartPemasukan as $val):
+            // $data['arrChartDailyAccount']['created_at'][] = "'".date("Y-m-d\TH:i:s\.v\Z", $val->created_at)."'";
+            $data['arrChartPemasukan']['created_at'][] = "'".$val->created_at."'";
+            $data['arrChartPemasukan']['nominal'][] = $val->nominal;
+        endforeach;
+        
+        // daily  account chart
+        $getChartPengeluaran = $this->M_admin->getChartPengeluaran();
+        foreach ($getChartPengeluaran as $val):
+            // $data['arrChartDailyAccount']['created_at'][] = "'".date("Y-m-d\TH:i:s\.v\Z", $val->created_at)."'";
+            $data['arrChartPengeluaran']['created_at'][] = "'".$val->created_at."'";
+            $data['arrChartPengeluaran']['nominal'][] = $val->nominal;
+        endforeach;
+
+        
+        $data['arrChartDailyDate'] = array_unique(array_merge(isset($data['arrChartPemasukan']['created_at']) ? $data['arrChartPemasukan']['created_at']:[], isset($data['arrChartPengeluaran']['created_at']) ? $data['arrChartPengeluaran']['created_at']:[]), SORT_REGULAR);
 
         $this->templateback->view('admin/dashboard', $data);
     }

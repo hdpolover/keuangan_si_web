@@ -18,12 +18,43 @@ class M_admin extends CI_Model
         $this->db->from('tb_keuangan');
         $this->db->where('is_deleted', 0);
         $keuangan = $this->db->get()->row()->total;
+        
+        $this->db->select('SUM(nominal) as total');
+        $this->db->from('tb_keuangan');
+        $this->db->where(['is_deleted' => 0, 'kategori' => 2]);
+        $pemasukan = $this->db->get()->row()->total;
+        
+        $this->db->select('SUM(nominal) as total');
+        $this->db->from('tb_keuangan');
+        $this->db->where(['is_deleted' => 0, 'kategori' => 1]);
+        $pengeluaran = $this->db->get()->row()->total;
 
         return [
             'pengguna' => $pengguna,
-            'keuangan' => $keuangan
+            'keuangan' => $keuangan,
+            'pemasukan' => $pemasukan,
+            'pengeluaran' => $pengeluaran
         ];
     }
+    
+    function getChartPemasukan()
+    {
+        $this->db->select("FROM_UNIXTIME(created_at, '%Y-%m-%d') AS created_at, SUM(nominal) AS nominal");
+        $this->db->from('tb_keuangan');
+        $this->db->where(['kategori' => 2]);
+        $this->db->group_by("FROM_UNIXTIME(created_at, '%Y-%m-%d')");
+        return $this->db->get()->result();
+    }
+    
+    function getChartPengeluaran()
+    {
+        $this->db->select("FROM_UNIXTIME(created_at, '%Y-%m-%d') AS created_at, SUM(nominal) AS nominal");
+        $this->db->from('tb_keuangan');
+        $this->db->where(['kategori' => 1]);
+        $this->db->group_by("FROM_UNIXTIME(created_at, '%Y-%m-%d')");
+        return $this->db->get()->result();
+    }
+
 
     function get_pengguna(){
         return $this->db->query("SELECT * FROM tb_auth a WHERE a.role = 2")->result();

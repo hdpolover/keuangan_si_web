@@ -30,6 +30,27 @@ class Pengguna extends CI_Controller
     public function index()
     {
         $data['statistik'] = $this->M_pengguna->get_statistik();
+        
+        // daily  account chart
+        $getChartPemasukan = $this->M_pengguna->getChartPemasukan();
+        foreach ($getChartPemasukan as $val):
+            // $data['arrChartDailyAccount']['created_at'][] = "'".date("Y-m-d\TH:i:s\.v\Z", $val->created_at)."'";
+            $data['arrChartPemasukan']['created_at'][] = "'".$val->created_at."'";
+            $data['arrChartPemasukan']['nominal'][] = $val->nominal;
+        endforeach;
+        
+        // daily  account chart
+        $getChartPengeluaran = $this->M_pengguna->getChartPengeluaran();
+        foreach ($getChartPengeluaran as $val):
+            // $data['arrChartDailyAccount']['created_at'][] = "'".date("Y-m-d\TH:i:s\.v\Z", $val->created_at)."'";
+            $data['arrChartPengeluaran']['created_at'][] = "'".$val->created_at."'";
+            $data['arrChartPengeluaran']['nominal'][] = $val->nominal;
+        endforeach;
+
+        
+        $data['arrChartDailyDate'] = array_unique(array_merge(isset($data['arrChartPemasukan']['created_at']) ? $data['arrChartPemasukan']['created_at']:[], isset($data['arrChartPengeluaran']['created_at']) ? $data['arrChartPengeluaran']['created_at']:[]), SORT_REGULAR);
+        
+        // ej($data);
         $this->templateback->view('pengguna/dashboard', $data);
     }
 
