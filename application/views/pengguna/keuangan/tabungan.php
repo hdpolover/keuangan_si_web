@@ -48,8 +48,8 @@
 											class="material-icons"
 											style="font-size: 15px; padding: 5px;">delete</i></button>
 								</td>
-								<td><?= $val->nama;?></td>
 								<td><?= date("d F Y", $val->created_at);?></td>
+								<td><?= $val->nama;?></td>
 								<td>Rp. <?= number_format($val->nominal);?></td>
 								<td><?= $val->keterangan;?></td>
 
