@@ -144,6 +144,34 @@ class M_pengguna extends CI_Model
         return $this->db->affected_rows() == true;
     }
 
+    function pengingat_edit(){
+        $id = $this->input->post('id');
+
+        $nama = $this->input->post('nama');
+        $tanggal = $this->input->post('tanggal');
+        $nominal = $this->input->post('nominal');
+
+        $data = [
+            'user_id' => $this->session->userdata('user_id'),
+            'nama' => $nama,
+            'tanggal' => strtotime($tanggal),
+            'tagihan' => $nominal,
+            'created_at' => time()
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('tb_pengingat', $data);
+        return $this->db->affected_rows() == true;
+    }
+
+    function pengingat_hapus(){
+        $id = $this->input->post('id');
+
+        $this->db->where('id', $id);
+        $this->db->update('tb_pengingat', ['is_deleted' => 1]);
+        return $this->db->affected_rows() == true;
+    }
+
     function pengingat_bayar(){
         $id = $this->input->post('id');
         $this->keuangan_tambah();

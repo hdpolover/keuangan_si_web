@@ -15,10 +15,19 @@
 					<h5><?= $val->nama;?></h5>
 					<h5><?= date("d F Y", $val->tanggal);?></h5>
 				</div>
-				<p class="card-text h3 mb-4">Rp. <?= number_format($val->tagihan);?></p>
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<p class="card-text h3 mb-4">Rp. <?= number_format($val->tagihan);?></p>
+					<div>
+						<button type="button" class="btn btn-info btn-xs waves-effect waves-light mr-2"
+							data-toggle="modal" data-target="#edit-<?= $val->id;?>">edit</button>
+						<button type="button" class="btn btn-danger btn-xs waves-effect waves-light" data-toggle="modal"
+							data-target="#hapus-<?= $val->id;?>">hapus</button>
+					</div>
+				</div>
 				<?php if($val->bulanan == 1):?>
 				<button type="button" class="btn btn-warning btn-sm waves-effect waves-light float-right ml-2"
-					data-toggle="modal" data-target="#bulanan-matikan-<?= $val->id;?>">matikan pengingat bulanan</button>
+					data-toggle="modal" data-target="#bulanan-matikan-<?= $val->id;?>">matikan pengingat
+					bulanan</button>
 				<?php else:?>
 				<button type="button" class="btn btn-info btn-sm waves-effect waves-light float-right ml-2"
 					data-toggle="modal" data-target="#bulanan-<?= $val->id;?>">ingatkan tiap bulan</button>
@@ -33,8 +42,9 @@
 					data-toggle="modal" data-target="#bayar-<?= $val->id;?>">bayar</button>
 				<?php endif;?>
 				<?php if(time() > $val->tanggal):?>
-					<small class="text-danger" style="position: absolute; bottom: 10px; left: 20px">Tagihan ini melebihi batas waktu pengingat, segera bayar tagihan
-						anda</small>
+				<small class="text-danger" style="position: absolute; bottom: 10px; left: 20px">Tagihan ini melebihi
+					batas waktu pengingat, segera bayar tagihan
+					anda</small>
 				<?php endif;?>
 			</div>
 		</div>
@@ -82,7 +92,8 @@
 				<div class="modal-body">
 					<form action="<?= site_url('pengguna/pengingat_bulanan');?>" method="post">
 						<input type="hidden" name="id" value="<?= $val->id;?>">
-						<p>Nonaktifkan pengingat bulanan untuk tagihan ini? setiap bulannya saat mendekati tanggal pengingat tagihan akan otomatis berubah kedalam status belum dibayar.</p>
+						<p>Nonaktifkan pengingat bulanan untuk tagihan ini? setiap bulannya saat mendekati tanggal
+							pengingat tagihan akan otomatis berubah kedalam status belum dibayar.</p>
 						<div class="modal-footer px-0">
 							<button type="button" class="btn btn-text-secondary" data-dismiss="modal">Batal</button>
 							<button type="submit" class="btn btn-primary">Aktifkan</button>
@@ -110,6 +121,76 @@
 						<div class="modal-footer px-0">
 							<button type="button" class="btn btn-text-secondary" data-dismiss="modal">Batal</button>
 							<button type="submit" class="btn btn-primary">Non-Aktifkan</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="edit-<?= $val->id;?>" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Edit data</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="material-icons">close</i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="<?= site_url('pengguna/pengingat_edit');?>" method="post">
+						<input type="hidden" name="id" value="<?= $val->id;?>">
+						<div class="form-group">
+							<label for="inputNama" class="input-label">Nama pengingat <small
+									class="text-danger">*</small></label>
+							<input type="text" class="form-control" name="nama" id="inputNama" value="<?= $val->nama;?>"
+								required>
+						</div>
+						<div class="form-group">
+							<label for="validationCustomUsername">Nominal <small class="text-danger">*</small></label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Rp.</span>
+								</div>
+								<input type="number" class="form-control" id="validationCustomUsername" name="nominal"
+									value="<?= $val->tagihan;?>" aria-describedby="inputGroupPrepend" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputTanggal" class="input-label">Tanggal <small
+									class="text-danger">*</small></label>
+							<input type="date" class="form-control mb-0" name="tanggal" id="inputTanggal"
+								value="<?= date("d/m/Y", $val->tanggal);?>" required>
+							<small class="text-muted">Atur tanggal pengingat ini akan aktif</small>
+						</div>
+						<div class="modal-footer px-0">
+							<button type="button" class="btn btn-text-secondary" data-dismiss="modal">Batal</button>
+							<button type="submit" class="btn btn-info">Edit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="hapus-<?= $val->id;?>" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Hapus data</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="material-icons">close</i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="<?= site_url('pengguna/pengingat_hapus');?>" method="post">
+						<input type="hidden" name="id" value="<?= $val->id;?>">
+						<p>Apakah anda yakin ingin menghapus tagihan ini?</p>
+						<div class="modal-footer px-0">
+							<button type="button" class="btn btn-text-secondary" data-dismiss="modal">Batal</button>
+							<button type="submit" class="btn btn-danger">Hapus</button>
 						</div>
 					</form>
 				</div>

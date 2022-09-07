@@ -128,6 +128,26 @@ class Pengguna extends CI_Controller
         }
     }
 
+    function pengingat_edit(){
+        if($this->M_pengguna->pengingat_edit() == true){
+            $this->session->set_flashdata('notif_success', "Pengingat berhasil diubah!");
+            redirect(site_url('pengguna/pengingat'));
+        }else{
+            $this->session->set_flashdata('notif_warning', "Terjadi kesalahaan saat mengubah pengingat, coba lagi nanti!");
+			redirect($this->agent->referrer());
+        }
+    }
+
+    function pengingat_hapus(){
+        if($this->M_pengguna->pengingat_hapus() == true){
+            $this->session->set_flashdata('notif_success', "Pengingat berhasil dihapus!");
+            redirect(site_url('pengguna/pengingat'));
+        }else{
+            $this->session->set_flashdata('notif_warning', "Terjadi kesalahaan saat menghapus pengingat, coba lagi nanti!");
+			redirect($this->agent->referrer());
+        }
+    }
+
     function pengingat_bayar(){
         if($this->M_pengguna->pengingat_bayar() == true){
             $this->session->set_flashdata('notif_success', "Berhasil mengubah pengingat menjadi sudah dibayar!");
