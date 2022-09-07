@@ -146,7 +146,7 @@ class M_pengguna extends CI_Model
 
     function pengingat_bayar(){
         $id = $this->input->post('id');
-
+        $this->keuangan_tambah();
         $this->db->where('id', $id);
         $this->db->update('tb_pengingat', ['status' => 1]);
         return $this->db->affected_rows() == true;

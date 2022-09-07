@@ -53,6 +53,10 @@
 				<div class="modal-body">
 					<form action="<?= site_url('pengguna/pengingat_bayar');?>" method="post">
 						<input type="hidden" name="id" value="<?= $val->id;?>">
+						<input type="hidden" name="nama" value="<?= $val->nama;?>">
+						<input type="hidden" name="nominal" value="<?= $val->tagihan;?>">
+						<input type="hidden" name="kategori" value="1">
+						<input type="hidden" name="keterangan" value="Pembayaran tagihan rutin">
 						<p>Jika anda sudah membayar pengingat ini, anda dapat mengubah status pengingat menjadi sudah
 							dibayarkan!</p>
 						<div class="modal-footer px-0">
