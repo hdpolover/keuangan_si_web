@@ -31,7 +31,7 @@ class M_pengguna extends CI_Model
     
         $interval = date_diff(date_create(date("Y-m-d")), date_create(date("Y-m-d", $bergabung->created_at)));
     
-        $lama = $interval->format('%a');
+        $lama = $interval->days;
 
         return [
             'tabungan' => $tabungan,
@@ -61,8 +61,16 @@ class M_pengguna extends CI_Model
     }
 
     // keuangan
-    function get_keuangan($kategori){
-        return $this->db->get_where('tb_keuangan', ['user_id' => $this->session->userdata('user_id'), 'kategori' => $kategori, 'is_deleted' => 0])->result();
+    function get_keuangan($kategori, $tgl){
+
+        $this->db->select("*");
+        $this->db->from('tb_keuangan');
+        $this->db->where(['user_id' => $this->session->userdata('user_id'), 'kategori' => $kategori, 'is_deleted' => 0]);
+        if(!empty($tgl)){
+            $this->db->where(['created_at >=' => strtotime($tgl[0]), 'created_at <=' => strtotime($tgl[1])]);
+        }
+
+        return $this->db->get()->result();
     }
     function get_keuanganRiwayat()
     {

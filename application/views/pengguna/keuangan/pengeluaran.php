@@ -19,13 +19,27 @@
 <div class="row">
 	<div class="col">
 		<div class="card">
+			<div class="card-header px-5 pt-2">
+				<form action="<?= current_url();?>" method="post">
+					<div class="d-flex justify-content-between align-items-center w-50">
+						<input type="text" class="form-control mb-0"  name="periode" placeholder="Masukkan periode" style="width: 60%;">
+						<button type="submit" class="btn btn-sm btn-info ml-3">tampil</button>
+						<?php if($this->input->post('periode')):?>
+							<a href="<?= current_url();?>" class="btn btn-sm btn-light ml-3">reset</a>
+							<span style="display: flex; width: 100%; margin-left: 15px;">Menampilkan data periode <?= $this->input->post('periode');?></span>
+						<?php else:?>
+							<span style="width: 100%"></span>
+						<?php endif;?>
+					</div>
+				</form>
+			</div>
 			<div class="card-body">
 				<div class="table-container">
 					<table class="table table-bordered table-hover w-100" id="myTable">
 						<thead>
 							<tr>
 								<th width="5%">No.</th>
-								<th width="8%"></th>
+								<th width="8%">Action</th>
 								<th scope="col">Tanggal</th>
 								<th scope="col">Keperluan</th>
 								<th scope="col">Nominal</th>
@@ -33,8 +47,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php if(!empty($keuangan)):?>
-							<?php $no = 1; foreach($keuangan as $key => $val):?>
+							<?php $total = 0; if(!empty($keuangan)):?>
+							<?php $no = 1;foreach($keuangan as $key => $val):?>
 							<tr>
 								<th scope="row"><?= $no++;?></th>
 								<td class="text-center">
@@ -102,7 +116,7 @@
 													<div class="row">
 														<div class="col-md-6 col-sm-12">
 															<div class="form-group">
-																<label for="inputNama" class="input-label">Nama <small
+																<label for="inputNama" class="input-label">Keperluan <small
 																		class="text-danger">*</small></label>
 																<input type="text" class="form-control" name="nama"
 																	id="inputNama" value="<?= $val->nama;?>" required>
@@ -170,9 +184,16 @@
 								</div>
 
 							</tr>
-							<?php endforeach;?>
+							<?php $total += $val->nominal; endforeach;?>
 							<?php endif;?>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="4"></th>
+								<th scope="col">Rp. <?= number_format($total);?></th>
+								<th scope="col"></th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -196,7 +217,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="form-group">
-								<label for="inputNama" class="input-label">Nama <small
+								<label for="inputNama" class="input-label">Keperluan <small
 										class="text-danger">*</small></label>
 								<input type="text" class="form-control" name="nama" id="inputNama" placeholder="Nama"
 									required>

@@ -26,6 +26,45 @@ class Cronjob extends CI_Controller
             endforeach;
         }
 
-        ej('Success activated '.$no.' reminder');
+        return ('Success activated '.$no.' reminder');
+    }
+
+    public function reminder_email(){
+        $reminder = $this->M_admin->get_allreminderEmail();
+        $no = 0;
+        if(!empty($reminder)){
+            foreach($reminder as $key => $val):
+                if(time() > $val->tanggal){
+                    $subject = "Pengingat tagihan";
+                    $message = "Hai, {$val->nama} kamu memiliki tagihan {$val->tagihan} yang akan jatuh tempo pada {$val->jatuh_tempo}. Harap segera bayar tagihanmu, dan ubah status pada pengingat tagihan";
+
+                    $this->send_email($val->email, $subject, $message);
+                }
+            endforeach;
+        }
+    }
+    
+    /**
+     * Function to send mailer
+     *
+     * @param  string $email
+     * @param  string $subject
+     * @param  string $message
+     * 
+     * @return boolean
+     */
+    public function send_email($email, $subject, $message)
+    {
+        $mail = array(
+            'to' => $email,
+            'subject' => $subject,
+            'message' => $message
+        );
+
+        if ($this->mailer->send($mail) == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

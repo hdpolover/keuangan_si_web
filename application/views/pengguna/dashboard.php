@@ -10,7 +10,7 @@
 				<h5 class="card-title">Total Tabungan</h5>
 				<div class="info-card-text">
 					<h3>Rp. <?= number_format($statistik['tabungan']);?></h3>
-					<span class="info-card-helper">Selama <?= $statistik['lama'];?></span>
+					<!-- <span class="info-card-helper">Selama <?= $statistik['lama'];?> hari</span> -->
 				</div>
 				<div class="info-card-icon">
 					<i class="material-icons">account_balance_wallet</i>
@@ -37,7 +37,7 @@
 				<h5 class="card-title">Total Pemasukan</h5>
 				<div class="info-card-text">
 					<h3>Rp. <?= number_format($statistik['pemasukan']);?></h3>
-					<span class="info-card-helper">Selama <?= $statistik['lama'];?></span>
+					<!-- <span class="info-card-helper">Selama <?= $statistik['lama'];?></span> -->
 				</div>
 				<div class="info-card-icon">
 					<i class="material-icons">attach_money</i>
@@ -51,7 +51,7 @@
 				<h5 class="card-title">Total Pengeluaran</h5>
 				<div class="info-card-text">
 					<h3>Rp. <?= number_format($statistik['pengeluaran']);?></h3>
-					<span class="info-card-helper">Selama <?= $statistik['lama'];?></span>
+					<!-- <span class="info-card-helper">Selama <?= $statistik['lama'];?></span> -->
 				</div>
 				<div class="info-card-icon">
 					<i class="material-icons">paid</i>

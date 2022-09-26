@@ -18,6 +18,20 @@
 
     $(document).ready( function () {
         $('#myTable').DataTable();
+        $('input[name="periode"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+
+        $('input[name="periode"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+
+        $('input[name="periode"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
     } );
     
     </script>

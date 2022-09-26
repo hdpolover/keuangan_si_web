@@ -19,13 +19,27 @@
 <div class="row">
 	<div class="col">
 		<div class="card">
+			<div class="card-header px-5 pt-2">
+				<form action="<?= current_url();?>" method="post">
+					<div class="d-flex justify-content-between align-items-center w-50">
+						<input type="text" class="form-control mb-0"  name="periode" placeholder="Masukkan periode" style="width: 60%;">
+						<button type="submit" class="btn btn-sm btn-info ml-3">tampil</button>
+						<?php if($this->input->post('periode')):?>
+							<a href="<?= current_url();?>" class="btn btn-sm btn-light ml-3">reset</a>
+							<span style="display: flex; width: 100%; margin-left: 15px;">Menampilkan data periode <?= $this->input->post('periode');?></span>
+						<?php else:?>
+							<span style="width: 100%"></span>
+						<?php endif;?>
+					</div>
+				</form>
+			</div>
 			<div class="card-body">
 				<div class="table-container">
 					<table class="table table-bordered table-hover w-100" id="myTable">
 						<thead>
 							<tr>
 								<th width="5%">No.</th>
-								<th width="8%"></th>
+								<th width="8%">Action</th>
 								<th scope="col">Tanggal</th>
 								<th scope="col">Keperluan</th>
 								<th scope="col">Nominal</th>
@@ -33,16 +47,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php if(!empty($keuangan)):?>
+							<?php $total = 0; if(!empty($keuangan)):?>
 							<?php $no = 1; foreach($keuangan as $key => $val):?>
 							<tr>
 								<th scope="row"><?= $no++;?></th>
 								<td class="text-center">
 									<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
 										data-target="#edit-<?= $val->id;?>" style="min-width: 0px;"><i
-											class="material-icons"
-											style="font-size: 15px; padding: 5px;"
-																	onclick="changeKategoriEdit(3,<?= $val->id;?>)">edit</i></button>
+											class="material-icons" style="font-size: 15px; padding: 5px;"
+											onclick="changeKategoriEdit(3,<?= $val->id;?>)">edit</i></button>
 									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
 										data-target="#delete-<?= $val->id;?>" style="min-width: 0px;"><i
 											class="material-icons"
@@ -74,7 +87,8 @@
 													<div class="modal-footer px-0">
 														<button type="button" class="btn btn-text-secondary"
 															data-dismiss="modal">Batal</button>
-														<button type="submit" class="btn btn-danger" id="send-button">Hapus</button>
+														<button type="submit" class="btn btn-danger"
+															id="send-button">Hapus</button>
 													</div>
 												</form>
 											</div>
@@ -102,8 +116,8 @@
 													<div class="row">
 														<div class="col-md-6 col-sm-12">
 															<div class="form-group">
-																<label for="inputNama" class="input-label">Nama <small
-																		class="text-danger">*</small></label>
+																<label for="inputNama" class="input-label">Keperluan
+																	<small class="text-danger">*</small></label>
 																<input type="text" class="form-control" name="nama"
 																	id="inputNama" value="<?= $val->nama;?>" required>
 															</div>
@@ -161,7 +175,8 @@
 													<div class="modal-footer px-0">
 														<button type="button" class="btn btn-text-secondary"
 															data-dismiss="modal">Batal</button>
-														<button type="submit" class="btn btn-info" id="send-button">Edit</button>
+														<button type="submit" class="btn btn-info"
+															id="send-button">Edit</button>
 													</div>
 												</form>
 											</div>
@@ -170,9 +185,16 @@
 								</div>
 
 							</tr>
-							<?php endforeach;?>
+							<?php $total += $val->nominal; endforeach;?>
 							<?php endif;?>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="4"></th>
+								<th scope="col">Rp. <?= number_format($total);?></th>
+								<th scope="col"></th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -196,7 +218,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="form-group">
-								<label for="inputNama" class="input-label">Nama <small
+								<label for="inputNama" class="input-label">Keperluan <small
 										class="text-danger">*</small></label>
 								<input type="text" class="form-control" name="nama" id="inputNama" placeholder="Nama"
 									required>
@@ -255,45 +277,45 @@
 	function changeKategoriEdit(kategori, id) {
 		console.log(kategori);
 		if (kategori == 1) {
-			$('#inputKategori-'+id).val(kategori);
+			$('#inputKategori-' + id).val(kategori);
 
-			$('#kategoriPengeluaran-'+id).addClass('btn-primary');
-			$('#kategoriPemasukan-'+id).addClass('btn-text-primary');
-			$('#kategoriTabungan-'+id).addClass('btn-text-primary');
+			$('#kategoriPengeluaran-' + id).addClass('btn-primary');
+			$('#kategoriPemasukan-' + id).addClass('btn-text-primary');
+			$('#kategoriTabungan-' + id).addClass('btn-text-primary');
 
-			$('#kategoriPengeluaran-'+id).removeClass('btn-text-primary');
-			$('#kategoriPemasukan-'+id).removeClass('btn-primary');
-			$('#kategoriTabungan-'+id).removeClass('btn-primary');
+			$('#kategoriPengeluaran-' + id).removeClass('btn-text-primary');
+			$('#kategoriPemasukan-' + id).removeClass('btn-primary');
+			$('#kategoriTabungan-' + id).removeClass('btn-primary');
 		} else if (kategori == 2) {
-			$('#inputKategori-'+id).val(kategori);
+			$('#inputKategori-' + id).val(kategori);
 
-			$('#kategoriPemasukan-'+id).addClass('btn-primary');
-			$('#kategoriPengeluaran-'+id).addClass('btn-text-primary');
-			$('#kategoriTabungan-'+id).addClass('btn-text-primary');
+			$('#kategoriPemasukan-' + id).addClass('btn-primary');
+			$('#kategoriPengeluaran-' + id).addClass('btn-text-primary');
+			$('#kategoriTabungan-' + id).addClass('btn-text-primary');
 
-			$('#kategoriPemasukan-'+id).removeClass('btn-text-primary');
-			$('#kategoriPengeluaran-'+id).removeClass('btn-primary');
-			$('#kategoriTabungan-'+id).removeClass('btn-primary');
+			$('#kategoriPemasukan-' + id).removeClass('btn-text-primary');
+			$('#kategoriPengeluaran-' + id).removeClass('btn-primary');
+			$('#kategoriTabungan-' + id).removeClass('btn-primary');
 		} else if (kategori == 3) {
-			$('#inputKategori-'+id).val(kategori);
+			$('#inputKategori-' + id).val(kategori);
 
-			$('#kategoriTabungan-'+id).addClass('btn-primary');
-			$('#kategoriPengeluaran-'+id).addClass('btn-text-primary');
-			$('#kategoriPemasukan-'+id).addClass('btn-text-primary');
+			$('#kategoriTabungan-' + id).addClass('btn-primary');
+			$('#kategoriPengeluaran-' + id).addClass('btn-text-primary');
+			$('#kategoriPemasukan-' + id).addClass('btn-text-primary');
 
-			$('#kategoriTabungan-'+id).removeClass('btn-text-primary');
-			$('#kategoriPengeluaran-'+id).removeClass('btn-primary');
-			$('#kategoriPemasukan-'+id).removeClass('btn-primary');
+			$('#kategoriTabungan-' + id).removeClass('btn-text-primary');
+			$('#kategoriPengeluaran-' + id).removeClass('btn-primary');
+			$('#kategoriPemasukan-' + id).removeClass('btn-primary');
 		} else {
-			$('#inputKategori-'+id).val(kategori);
+			$('#inputKategori-' + id).val(kategori);
 
-			$('#kategoriPemasukan-'+id).addClass('btn-primary');
-			$('#kategoriPengeluaran-'+id).addClass('btn-text-primary');
-			$('#kategoriTabungan-'+id).addClass('btn-text-primary');
+			$('#kategoriPemasukan-' + id).addClass('btn-primary');
+			$('#kategoriPengeluaran-' + id).addClass('btn-text-primary');
+			$('#kategoriTabungan-' + id).addClass('btn-text-primary');
 
-			$('#kategoriPemasukan-'+id).removeClass('btn-text-primary');
-			$('#kategoriPengeluaran-'+id).removeClass('btn-primary');
-			$('#kategoriTabungan-'+id).removeClass('btn-primary');
+			$('#kategoriPemasukan-' + id).removeClass('btn-text-primary');
+			$('#kategoriPengeluaran-' + id).removeClass('btn-primary');
+			$('#kategoriTabungan-' + id).removeClass('btn-primary');
 		}
 	}
 

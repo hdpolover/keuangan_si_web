@@ -17,7 +17,7 @@ class TemplateBack
 
     public function getPengingat()
     {
-        $query = $this->_ci->db->get_where('tb_pengingat', ['user_id' => $this->_ci->session->userdata('user_id'), 'status' => 0]);
+        $query = $this->_ci->db->get_where('tb_pengingat', ['user_id' => $this->_ci->session->userdata('user_id'), 'status' => 0, 'is_deleted' => 0]);
         return $query->result();
     }
 

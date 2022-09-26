@@ -8,7 +8,7 @@ class Authentication extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['M_auth']);
+        $this->load->model(['M_auth', 'M_admin']);
     }
 
     public function index()
@@ -55,6 +55,7 @@ class Authentication extends CI_Controller
     }
 
     function proses_login(){
+        $this->reminder_email();
         // ambil inputan dari view
         $email = $this->input->post('email');
         $password = $this->input->post('password');
@@ -244,6 +245,21 @@ class Authentication extends CI_Controller
         $this->session->sess_destroy();
         $this->session->set_flashdata('success', 'Berhasil keluar!');
         redirect(base_url());
+    }
+
+    public function reminder_email(){
+        $reminder = $this->M_admin->get_allreminderEmail();
+        $no = 0;
+        if(!empty($reminder)){
+            foreach($reminder as $key => $val):
+                if(time() > $val->tanggal){
+                    $subject = "Pengingat tagihan";
+                    $message = "Hai, {$val->nama} kamu memiliki tagihan {$val->tagihan} yang akan jatuh tempo pada {$val->jatuh_tempo}. Harap segera bayar tagihanmu, dan ubah status pada pengingat tagihan";
+
+                    $this->send_email($val->email, $subject, $message);
+                }
+            endforeach;
+        }
     }
     
     /**

@@ -10,7 +10,7 @@
 	<?php foreach($pengingat as $key => $val):?>
 	<div class="col-md-4">
 		<div class="card h-100 mb-4">
-			<div class="card-body">
+			<div class="card-body pb-0 ">
 				<div class="d-flex justify-content-between">
 					<h5><?= $val->nama;?></h5>
 					<h5><?= date("d F Y", $val->tanggal);?></h5>
@@ -33,7 +33,7 @@
 					data-toggle="modal" data-target="#bulanan-<?= $val->id;?>">ingatkan tiap bulan</button>
 				<?php endif;?>
 				<?php if($val->status == 0):?>
-				<span class="badge badge-warning">Belum Dibayar</span>
+				<span class="text-danger"><i class="material-icons" style="font-size: 40px">warning</i> <span style="font-size: 16px; bottom: 36px; position: absolute; left: 65px;">Belum Dibayar</span></span>
 				<?php endif;?>
 				<?php if ($val->status == 1):?>
 				<span class="btn btn-text-success btn-sm waves-effect waves-light float-right">Sudah Dibayar</span>
@@ -41,7 +41,7 @@
 				<button type="button" class="btn btn-secondary btn-sm waves-effect waves-light float-right"
 					data-toggle="modal" data-target="#bayar-<?= $val->id;?>">bayar</button>
 				<?php endif;?>
-				<?php if(time() > $val->tanggal):?>
+				<?php if(time() > $val->tanggal && $val->status == 0):?>
 				<small class="text-danger" style="position: absolute; bottom: 10px; left: 20px">Tagihan ini melebihi
 					batas waktu pengingat, segera bayar tagihan
 					anda</small>

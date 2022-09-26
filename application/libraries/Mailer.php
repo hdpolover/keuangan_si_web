@@ -346,8 +346,7 @@ class Mailer
                                           <p style="font-size: 14px; line-height: 140%;"><span
                                               style="font-size: 22px; line-height: 30.8px; font-family: Cabin, sans-serif;"><strong><span
                                                   style="line-height: 30.8px; font-size: 22px;">Terima kasih, salam.</span></strong></span><br /><span
-                                              style="font-size: 18px; line-height: 25.2px; font-family: Cabin, sans-serif;">YBB
-                                              Foundation Team</span></p>
+                                              style="font-size: 18px; line-height: 25.2px; font-family: Cabin, sans-serif;">ADMIN</span></p>
                                         </div>
 
                                       </td>
@@ -395,7 +394,7 @@ class Mailer
                                         <h4 class="v-text-align"
                                           style="margin: 0px; line-height: 100%; text-align: center; word-wrap: break-word; font-weight: normal; font-family:Cabin,sans-serif; font-size: 10px;">
                                           This email is generate by our system, please do not reply to this email
-                                          directly<br /><br />@YBB Foundation Scholarship supported by Ngodingin Indonesia
+                                          directly<br /><br />@supported by Ngodingin Indonesia
                                         </h4>
 
                                       </td>

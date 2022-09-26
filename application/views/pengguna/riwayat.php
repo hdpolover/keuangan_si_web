@@ -12,9 +12,9 @@
 						<thead>
 							<tr>
 								<th width="5%">No.</th>
-								<th scope="col">Tanggal</th>
 								<th scope="col">Kategori</th>
 								<th scope="col">Keperluan</th>
+								<th scope="col">Tanggal</th>
 								<th scope="col">Nominal</th>
 								<th scope="col">Keterangan</th>
 							</tr>

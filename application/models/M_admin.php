@@ -71,6 +71,24 @@ class M_admin extends CI_Model
         return $this->db->get_where('tb_pengingat', ['bulanan' => 1])->result();
     }
 
+    function get_allreminderEmail(){
+        $this->db->select('a.*, b.nama, b.email')
+        ->from('tb_pengingat a')
+        ->join('tb_auth b', 'a.user_id = b.user_id', 'inner')
+        ->where(['a.is_deleted' => 0, 'status' => 0]);
+
+        $models = $this->db->get()->result();
+        
+        if(!empty($models)){
+            foreach($models as $key => $val){
+                $val->jatuh_tempo = date('d F Y', $val->tanggal);
+                $val->tagihan = $val->nama;
+            }
+        }
+
+        return $models;
+    }
+
     function update_reminder($id, $new_date){
         $this->db->where('id', $id);
         $this->db->update('tb_pengingat', ['status' => 0, 'tanggal' => $new_date]);
