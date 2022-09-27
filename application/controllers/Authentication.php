@@ -252,9 +252,29 @@ class Authentication extends CI_Controller
         $no = 0;
         if(!empty($reminder)){
             foreach($reminder as $key => $val):
+                if (strtotime(date("Y/m/d")) == strtotime("-7 days", date("Y/m/d", $val->tanggal))) {
+                    $subject = "Pengingat tagihan";
+                    $message = "Hai, {$val->nama} kamu memiliki tagihan {$val->tagihan} yang akan jatuh tempo 7 hari lagi pada {$val->jatuh_tempo}. Harap segera bayar tagihanmu, dan ubah status pada pengingat tagihan";
+
+                    $this->send_email($val->email, $subject, $message);
+                }
+
+                if(strtotime(date("Y/m/d")) == strtotime("-3 days", date("Y/m/d", $val->tanggal))){
+                    $subject = "Pengingat tagihan";
+                    $message = "Hai, {$val->nama} kamu memiliki tagihan {$val->tagihan} yang akan jatuh tempo 3 hari lagi pada {$val->jatuh_tempo}. Harap segera bayar tagihanmu, dan ubah status pada pengingat tagihan";
+
+                    $this->send_email($val->email, $subject, $message);
+                }
+
+                if(strtotime(date("Y/m/d")) == strtotime("-1 days", date("Y/m/d", $val->tanggal))){
+                    $subject = "Pengingat tagihan";
+                    $message = "Hai, {$val->nama} kamu memiliki tagihan {$val->tagihan} yang akan jatuh tempo besok pada {$val->jatuh_tempo}. Harap segera bayar tagihanmu, dan ubah status pada pengingat tagihan";
+
+                    $this->send_email($val->email, $subject, $message);
+                }
                 if(time() > $val->tanggal){
                     $subject = "Pengingat tagihan";
-                    $message = "Hai, {$val->nama} kamu memiliki tagihan {$val->tagihan} yang akan jatuh tempo pada {$val->jatuh_tempo}. Harap segera bayar tagihanmu, dan ubah status pada pengingat tagihan";
+                    $message = "Hai, {$val->nama} kamu memiliki tagihan {$val->tagihan} yang sudah jatuh tempo pada {$val->jatuh_tempo}. Harap segera bayar tagihanmu, dan ubah status pada pengingat tagihan";
 
                     $this->send_email($val->email, $subject, $message);
                 }
