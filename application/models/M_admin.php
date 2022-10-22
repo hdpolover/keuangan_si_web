@@ -75,7 +75,7 @@ class M_admin extends CI_Model
         $this->db->select('a.*, b.nama, b.email')
         ->from('tb_pengingat a')
         ->join('tb_auth b', 'a.user_id = b.user_id', 'inner')
-        ->where(['a.is_deleted' => 0, 'status' => 0]);
+        ->where(['a.is_deleted' => 0, 'a.status' => 0]);
 
         $models = $this->db->get()->result();
         

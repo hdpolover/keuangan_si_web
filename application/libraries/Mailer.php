@@ -46,7 +46,7 @@ class Mailer
             $mail->SMTPDebug      = $this->get_settingsValue('mailer_mode');
             $mail->SMTPAuth       = true;
             $mail->SMTPKeepAlive  = true;
-            $mail->SMTPSecure     = "tls";
+            $mail->SMTPSecure     = "ssl";
             $mail->Port           = $this->get_settingsValue('mailer_port'); #587;
             $mail->Host           = $this->get_settingsValue('mailer_host'); #"smtp.gmail.com";
             $mail->Username       = $this->get_settingsValue('mailer_username'); #"ngodingin.indonesia@gmail.com";

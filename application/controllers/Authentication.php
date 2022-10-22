@@ -13,20 +13,13 @@ class Authentication extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('logged_in') == true || $this->session->userdata('logged_in')) {
-            $this->session->set_flashdata('warning', 'Berhasil masuk ke akun.');
-            
-            if($this->session->userdata('role') == 1){
-                redirect(site_url('admin'));
-            }elseif($this->session->userdata('role') == 2){
-                redirect(site_url('pengguna'));
-            }else{
-                redirect(site_url('logout'));
-            }
+        $verifikasi = 0;
 
-        } else {
-            $this->templatefront->view('authentication/login');
+        if($this->input->get('act')){
+            $verifikasi = $this->input->get('act') == 'verifikasi' ? 1 : 0;
         }
+        $data['verifikasi'] = $verifikasi;
+        $this->templatefront->view('authentication/login', $data);
     }
 
     public function daftar()
@@ -65,36 +58,54 @@ class Authentication extends CI_Controller
             // ambil data user, menjadi array
             $user = $this->M_auth->get_user($email);
 
-            // cek apakah password yang dimasukkan sama dengan database
-            if (password_verify($password, $user->password)) {
+            if($user->status == 1){
+                // cek apakah password yang dimasukkan sama dengan database
+                if (password_verify($password, $user->password)) {
 
-                // simpan data user yang login kedalam session
-                $session_data = array(
-                    'user_id'   => $user->user_id,
-                    'nama'      => $user->nama,
-                    'email'     => $user->email,
-                    'role'      => $user->role,
-                    'logged_in' => true,
-                );
+                    // simpan data user yang login kedalam session
+                    $session_data = array(
+                        'user_id'   => $user->user_id,
+                        'nama'      => $user->nama,
+                        'email'     => $user->email,
+                        'role'      => $user->role,
+                        'logged_in' => true,
+                    );
 
-                $this->session->set_userdata($session_data);
+                    $this->session->set_userdata($session_data);
 
-                $this->M_auth->update_logTime();
+                    $this->M_auth->update_logTime();
 
-                if ($this->session->userdata('redirect')) {
-                    $this->session->set_flashdata('notif_success', 'Anda telah masuk. Silahkan melanjutkan aktivitas anda!');
-                    redirect($this->session->userdata('redirect'));
-                } else {
-                    if($user->role == 1){
-                        $this->session->set_flashdata('notif_success', "Selamat datang admin!");
-                        redirect(site_url('admin'));
-                    }else{
-                        $this->session->set_flashdata('notif_success', "Selamat datang!");
-                        redirect(site_url('pengguna'));
+                    if ($this->session->userdata('redirect')) {
+                        $this->session->set_flashdata('notif_success', 'Anda telah masuk. Silahkan melanjutkan aktivitas anda!');
+                        redirect($this->session->userdata('redirect'));
+                    } else {
+                        if($user->role == 1){
+                            $this->session->set_flashdata('notif_success', "Selamat datang admin!");
+                            redirect(site_url('admin'));
+                        }else{
+                            $this->session->set_flashdata('notif_success', "Selamat datang!");
+                            redirect(site_url('pengguna'));
+                        }
                     }
+                } else {
+                    $this->session->set_flashdata('warning', "Mohon maaf. Password yang Anda masukkan salah!");
+                    redirect(site_url('login'));
                 }
-            } else {
-                $this->session->set_flashdata('warning', "Mohon maaf. Password yang Anda masukkan salah!");
+            }else{
+
+                $code = base64_encode($user->email.''.rand(000000, 999999));
+
+                $this->db->where('user_id', $user->user_id);
+                $this->db->update('tb_auth', ['otp' => $code, 'otp_expired' => strtotime("+1 days", date('Y/m/d'))]);
+
+                $link = site_url('verifikasi-email/'.$code);
+
+                $subject = "Verifikasi akun - {$user->email}";
+                $message = "Hai, {$user->nama}. Klik link dibawah ini untuk memverifikasi email anda untuk akun Catatan UangKu.<br><br><a href='".$link."'>".$link."</a>";
+
+                $this->send_email($email, $subject, $message);
+
+                $this->session->set_flashdata('warning', "Mohon maaf. harap verifikasi email anda terlebih dahulu, kami telah mengirimkan email verifikasi ke akun anda!");
                 redirect(site_url('login'));
             }
         } else {
@@ -111,6 +122,7 @@ class Authentication extends CI_Controller
     function proses_daftar(){
         // ambil inputan dari view
         $nama           = htmlspecialchars($this->input->post('nama'));
+        $username       = htmlspecialchars($this->input->post('username'));
         $email          = htmlspecialchars($this->input->post('email'));
         $password       = htmlspecialchars($this->input->post('password'));
         $password_conf  = htmlspecialchars($this->input->post('password_conf'));
@@ -121,12 +133,18 @@ class Authentication extends CI_Controller
             // cek apakah password sama
             if ($password == $password_conf) {
         
-                 // ubah inputan view menjadi array
+                // ubah inputan view menjadi array
+
+                $code = base64_encode($email.''.rand(000000, 999999));
+
                 $data_user = array(
-                    'nama'      => $nama,
-                    'email'     => $email,
-                    'password'  => password_hash($password, PASSWORD_DEFAULT),
-                    'created_at'=> time()
+                    'nama'          => $nama,
+                    'username'      => $username,
+                    'email'         => $email,
+                    'otp'           => $code,
+                    'otp_expired'   => strtotime("+1 days", date('Y/m/d')),
+                    'password'      => password_hash($password, PASSWORD_DEFAULT),
+                    'created_at'    => time()
                 );
         
                 // masukkan ke database
@@ -148,16 +166,28 @@ class Authentication extends CI_Controller
                     );
           
                     $this->session->set_userdata($session_data);
-          
-                    $this->session->set_flashdata('success', "Berhasil mendaftaran akun Anda!");
 
-                    if($this->session->userdata('role') == 1){
-                        redirect(site_url('admin'));
-                    }elseif($this->session->userdata('role') == 2){
-                        redirect(site_url('pengguna'));
-                    }else{
-                        redirect(site_url('logout'));
+                    $link = site_url('verifikasi-email/'.$code);
+
+                    $subject = "Verifikasi akun - {$user->email}";
+                    $message = "Hai, {$user->nama}. Klik link dibawah ini untuk memverifikasi email anda untuk akun Catatan UangKu.<br><br><a href='".$link."'>".$link."</a>";
+
+                    if ($this->send_email($email, $subject, $message)) {
+                        $this->session->set_flashdata('success', "Berhasil mendaftaran akun Anda, harap melakukan verifikasi via email yang anda daftarkan!");
+                        redirect(site_url('login?act=verifikasi'));
+                    } else {
+                        $this->session->set_flashdata('error', "Terjadi kesalahan, saat mengirimkan email verifikasi akun, coba lagi nanti !");
+                        redirect($this->agent->referrer());
                     }
+                    
+
+                    // if($this->session->userdata('role') == 1){
+                    //     redirect(site_url('admin'));
+                    // }elseif($this->session->userdata('role') == 2){
+                    //     redirect(site_url('pengguna'));
+                    // }else{
+                    //     redirect(site_url('logout'));
+                    // }
 
                 } else {
                     $this->session->set_flashdata('error', "Terjadi kesalahan saat mendaftarkan akun Anda. Harap coba lagi!");
@@ -168,7 +198,7 @@ class Authentication extends CI_Controller
                 redirect(site_url('daftar'));
             }
         } else {
-            $this->session->set_flashdata('warning', "Email telah digunakan !");
+            $this->session->set_flashdata('warning', "Email/Username telah digunakan !");
             redirect(site_url('daftar'));
         }
     }
@@ -224,6 +254,46 @@ class Authentication extends CI_Controller
         } else {
             $this->session->set_flashdata('warning', "Password yang anda masukkan tidak sama, harap coba lagi !");
             redirect($this->agent->referrer());
+        }
+    }
+
+    function verifikasi_email($code = null){
+        if(!is_null($code)){
+            $user = $this->M_auth->getUserByCode($code);
+
+            if($user){
+                if($user->otp_expired <= time()){
+                    if($this->M_auth->verifikasiEmail($user->user_id) == true){
+                        $this->session->set_flashdata('success', "Berhasil memverifikasi email anda, silahkan melanjutkan untuk login !");
+                        redirect(site_url('login'));
+                    }else{
+                        $this->session->set_flashdata('error', "Akun anda telah diverifikasi !");
+                        redirect(site_url('login'));
+                    }
+                }else{
+
+                    $code = base64_encode($user->email.''.rand(000000, 999999));
+
+                    $this->db->where('user_id', $user->user_id);
+                    $this->db->update('tb_auth', ['otp' => $code, 'otp_expired' => strtotime("+1 days", date('Y/m/d'))]);
+
+                    $link = site_url('verifikasi-email/'.$code);
+
+                    $subject = "Verifikasi akun - {$user->email}";
+                    $message = "Hai, {$user->nama}. Klik link dibawah ini untuk memverifikasi email anda untuk akun Catatan UangKu.<br><br><a href='".$link."'>".$link."</a>";
+
+                    $this->send_email($user->email, $subject, $message);
+
+                    $this->session->set_flashdata('warning', "Link verifikasi telah expired, link verifikasi baru telah dikirim harap cek email anda !");
+                    redirect(site_url('login?act=verifikasi'));
+                }
+            }else{
+                $this->session->set_flashdata('warning', "Link verifikasi tidak terintegrasi dengan akun manapun, harap coba lagi !");
+                redirect(base_url());
+            }
+        }else{
+            $this->session->set_flashdata('error', "Link verifikasi tidak dikenali, harap coba lagi !");
+            redirect(base_url());
         }
     }
     

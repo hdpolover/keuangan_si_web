@@ -23,10 +23,16 @@ class Pengguna extends CI_Controller
             $this->session->set_flashdata('warning', "Kamu tidak memiliki akses");
             redirect(base_url());
         }
-        $this->load->model(['M_pengguna', 'M_admin']);
+        $this->load->model(['M_pengguna', 'M_admin', 'M_auth']);
 
-        $this->reminder_bulanan();
-        $this->reminder_email();
+        if($this->M_auth->cekVerifikasi($this->session->userdata('user_id')) == true){
+            $this->session->sess_destroy();
+            $this->session->set_flashdata('warning', "Harap verifikasi email anda terlebih dahulu");
+            redirect('login?act=verifikasi');
+        }
+
+        // $this->reminder_bulanan();
+        // $this->reminder_email();
     }
 
     public function reminder_bulanan()

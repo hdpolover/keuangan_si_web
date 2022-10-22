@@ -13,6 +13,10 @@
 									<input type="text" class="form-control" id="inputNama" name="nama" placeholder="Nama" required>
 								</div>
 								<div class="form-group">
+									<label for="inputUsername">Username <small class="text-danger">*</small></label>
+									<input type="text" class="form-control" id="inputUsername" name="username" placeholder="Username" required>
+								</div>
+								<div class="form-group">
 									<label for="inputEmail">Email <small class="text-danger">*</small></label>
 									<input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" required>
 								</div>

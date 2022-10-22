@@ -6,6 +6,7 @@ $route['login'] = 'authentication';
 $route['daftar'] = 'authentication/daftar';
 $route['lupa'] = 'authentication/lupa';
 $route['logout'] = 'authentication/proses_logout';
+$route['verifikasi-email/(:any)'] = 'authentication/verifikasi_email/$1';
 
 // Default
 $route['default_controller'] = 'authentication';

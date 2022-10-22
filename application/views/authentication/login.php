@@ -8,11 +8,16 @@
 					<div class="card login-box">
 						<div class="card-body">
 							<h4 class="text-secondary mb-4">Selamat Datang</h4>
+							<?php if($verifikasi == 1):?>
+								<div class="alert alert-soft-primary">
+									Harap melakukan verifikasi email, dengan mengakses link yang telah dikirim ke email anda terlebih dahulu!
+								</div>
+							<?php endif;?>
 							<form action="<?= site_url('authentication/proses_login');?>" method="post"
 								autocomplete="off">
 								<div class="form-group">
-									<label for="email">Email</label>
-									<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+									<label for="email">Email/Username</label>
+									<input type="text" class="form-control" id="email" name="email" placeholder="Email/Username" required>
 								</div>
 								<div class="form-group">
 									<label for="password">Password</label>

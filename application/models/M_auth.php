@@ -13,6 +13,7 @@ class M_auth extends CI_Model
         $this->db->select('*');
         $this->db->from('tb_auth');
         $this->db->where('email', $email);
+        $this->db->or_where('username', $email);
         $query = $this->db->get();
     
         // jika hasil dari query diatas memiliki lebih dari 0 record
@@ -28,6 +29,7 @@ class M_auth extends CI_Model
         $this->db->select('*');
         $this->db->from('tb_auth');
         $this->db->where('email', $email);
+        $this->db->or_where('username', $email);
         $query = $this->db->get();
     
         // jika hasil dari query diatas memiliki lebih dari 0 record
@@ -71,6 +73,37 @@ class M_auth extends CI_Model
     {
         $this->db->where('user_id', $this->session->userdata('user_id'));
         $this->db->update('tb_auth', ['log_time' => time()]);
+        return $this->db->affected_rows() == true;
+    }
+
+    public function getUserByCode($code){
+        $this->db->select('*')
+        ->from('tb_auth')
+        ->where('otp', $code)
+        ;
+
+        return $this->db->get()->row();
+    }
+
+    public function cekVerifikasi($user_id){
+        $this->db->select('*')
+        ->from('tb_auth')
+        ->where('user_id', $user_id)
+        ;
+
+        $models = $this->db->get()->row();
+
+        if($models->status == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function verifikasiEmail($user_id){
+        
+        $this->db->where('user_id', $user_id);
+        $this->db->update('tb_auth', ['status' => 2]);
         return $this->db->affected_rows() == true;
     }
 }
