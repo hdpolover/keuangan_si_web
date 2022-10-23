@@ -48,7 +48,7 @@ class Authentication extends CI_Controller
     }
 
     function proses_login(){
-        $this->reminder_email();
+        //$this->reminder_email();
         // ambil inputan dari view
         $email = $this->input->post('email');
         $password = $this->input->post('password');
@@ -58,7 +58,7 @@ class Authentication extends CI_Controller
             // ambil data user, menjadi array
             $user = $this->M_auth->get_user($email);
 
-            if($user->status == 1){
+            if($user->status == 2){
                 // cek apakah password yang dimasukkan sama dengan database
                 if (password_verify($password, $user->password)) {
 

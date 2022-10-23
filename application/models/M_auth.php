@@ -93,7 +93,7 @@ class M_auth extends CI_Model
 
         $models = $this->db->get()->row();
 
-        if($models->status == 1){
+        if($models->status === 1){
             return true;
         }else{
             return false;
